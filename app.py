@@ -146,15 +146,18 @@ quick_queries = {
     "💰 Diaspora → Invest.": "Transformer les transferts diaspora comorienne en investissements",
     "⚡ Énergie renouvelable": "Opportunités énergies renouvelables aux Comores : solaire éolien géothermie",
 }
-selected_quick = None
-for i, (label, query) in enumerate(quick_queries.items()):
+if "quick_query" not in st.session_state:
+    st.session_state.quick_query = ""
+
+for i, (label, q) in enumerate(quick_queries.items()):
     with q_cols[i]:
         if st.button(label, use_container_width=True):
-            selected_quick = query
+            st.session_state.quick_query = q
+            st.rerun()
 
 st.markdown("---")
 st.markdown("**🔍 Votre question d'analyse**")
-query = st.text_area("Question", value=selected_quick or "",
+query = st.text_area("Question", value=st.session_state.quick_query, ...),
     placeholder="Ex: Quelles opportunités dans l'agro-industrie compte tenu des relations avec le Golfe ?",
     height=120, label_visibility="collapsed")
 
